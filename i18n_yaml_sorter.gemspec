@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "i18n_yaml_sorter"
-  s.version = "0.2.0"
+  s.name = "i18n_yaml_sorter_2"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Bernardo de P\u{e1}dua"]
-  s.date = "2011-11-29"
+  s.authors = ["Bernardo de P\u{e1}dua", 'compiledwrong']
+  s.date = "2081-04-06"
   s.description = " Allows you to deep sort YAML files that are mainly composed of \n      nested hashes and string values. Great to sort your rails I18n YAML files. You can easily\n      add it to a textmate bundle, rake task, or just use the included regular comand line tool. \n    "
-  s.email = "berpasan@gmail.com"
+  s.email = ["berpasan@gmail.com", 'compiledwrong+i18n_yaml_sorter@gmail.com']
   s.executables = ["sort_yaml"]
   s.extra_rdoc_files = [
     "LICENSE",
@@ -45,25 +45,10 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/redealumni/i18n_yaml_sorter"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
   s.summary = "A I18n YAML deep sorter that will keep your locales organized and not screw up your text formating"
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
-    else
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
-      s.add_dependency(%q<rcov>, [">= 0"])
-    end
-  else
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
-    s.add_dependency(%q<rcov>, [">= 0"])
-  end
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rspec'
 end
 
