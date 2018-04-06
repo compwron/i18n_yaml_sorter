@@ -1,3 +1,7 @@
-update dependencies and code style
-merge old PRs
-put back rcov
+- update gemfile
+- merge old PRs
+- put back rcov
+- add brakeman
+- add rubocop
+- refactor core logic?
+- add travisci build and badge etc
