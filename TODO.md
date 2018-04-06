@@ -4,3 +4,4 @@ put back rcov
 add brakeman
 add rubocop
 refactor core logic?
+add travisci build and badge etc
