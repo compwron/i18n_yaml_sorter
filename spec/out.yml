@@ -1,16 +1,16 @@
 # encoding: UTF-8
-a_one: José   # Comentado   
+a_one: José   # Comentado
 b_two:
   a_1: Joãozinho
   b_two: |
     Nos somos legais, como
-    por exemplo: João, 
+    por exemplo: João,
     que: gosta de nos dar milhões
     em dinheiro todos os dias.
-    
-    Linhas em Branco com tabulação 
+
+    Linhas em Branco com tabulação
     nos strings devem ser preservadas.
-    
+
   c_three:
       a: "Marcelo"
       "b": Bernardo
@@ -22,7 +22,7 @@ b_two:
       # linhas (goes with d_4)
   d_four: "Somos chatos
     gostamos de várias linhas\"
-    e ainda usamos escaping 
+    e ainda usamos escaping
     para fuder"
   e_five: Prefirimos strings sem
     nenhum tipo de especificação.

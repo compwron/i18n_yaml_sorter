@@ -211,10 +211,10 @@ Now run the rake task under your Rails' app to sort all the i18n files in your +
 
 TODO: Add command line arguments parsing and options, so you can, for instance, sort a whole dir of yaml files.
 
-== Changelog
+== Development
 
-* 0.2 - Improves gem, tests, adds TextMate Bundle, adds Rails' Rake task.
-* 0.1 - Initial release
+  $rake spec # run tests
+  $rake build # build installable/publishable gem
 
 == Future improvements (Forks Welcome!)
 

@@ -3,7 +3,7 @@ module I18nYamlSorter
     require 'rails'
     class Railtie < Rails::Railtie
       rake_tasks do
-        load "tasks/i18n_yaml_sorter.rake"
+        load 'tasks/i18n_yaml_sorter.rake'
       end
     end
   end

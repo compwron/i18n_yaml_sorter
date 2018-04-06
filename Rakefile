@@ -1,5 +1,5 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks' # allows 'rake build'
+require 'rspec/core/rake_task' # rspec tasks
 
 task default: :spec
 
