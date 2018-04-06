@@ -2,7 +2,7 @@ i18n_yaml_sorter
 ----------------
 
 0.3.2
-- gemspec, code style changes
+- gemspec
 
 0.3.1
 - convert tests to use rspec
