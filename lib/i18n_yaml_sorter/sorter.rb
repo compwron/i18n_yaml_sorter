@@ -12,6 +12,8 @@ module I18nYamlSorter
 
     private
 
+    LINE_BREAK = "\n"
+
     def is_blank?(line)
       line.match(/^\s*$/)
     end
@@ -32,7 +34,7 @@ module I18nYamlSorter
       loop do
         content_line = @io_input.gets || break
         content_line.chomp!
-        array.last << content_line.concat("\n")
+        array.last << content_line.concat(LINE_BREAK)
         break if content_line.match(/[^\\][#{starts_with_quote}]\s*$/)
       end
     end
@@ -59,7 +61,7 @@ module I18nYamlSorter
 
         key_value_parse = matches_key_value_line?(maybe_next_line)
         if key_value_parse
-          array << maybe_next_line.concat("\n") # yes, it is the beginning of a key:value block
+          array << maybe_next_line.concat(LINE_BREAK) # yes, it is the beginning of a key:value block
 
           # Special cases when it should add extra lines to the array element (multi line quoted strings)
 
@@ -73,7 +75,7 @@ module I18nYamlSorter
 
         matches_is_key_block = matches_is_key_block?(maybe_next_line)
         if matches_is_key_block
-          array << maybe_next_line.concat("\n") # yes, it is the beginning of a key block
+          array << maybe_next_line.concat(LINE_BREAK) # yes, it is the beginning of a key block
           indentation = matches_is_key_block[1]
           # Append the next lines until we find one that is not indented
           loop do
@@ -81,7 +83,7 @@ module I18nYamlSorter
             processed_line = content_line.chomp
             this_indentation = indentation_of(processed_line)
             if indentation.size < this_indentation.size
-              array.last << processed_line.concat("\n")
+              array.last << processed_line.concat(LINE_BREAK)
             else
               @read_line_again = content_line
               break
@@ -94,16 +96,16 @@ module I18nYamlSorter
         # Is it the beginning of a multi level hash?
         is_start_of_hash = maybe_next_line.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)(\s*)$/)
         if is_start_of_hash
-          array << maybe_next_line.concat("\n")
+          array << maybe_next_line.concat(LINE_BREAK)
           next
         end
 
         # If we got here and nothing was done, this line
         # should probably be merged with the previous one.
         if array.last
-          array.last << maybe_next_line.concat("\n")
+          array.last << maybe_next_line.concat(LINE_BREAK)
         else
-          array << maybe_next_line.concat("\n")
+          array << maybe_next_line.concat(LINE_BREAK)
         end
       end
 
