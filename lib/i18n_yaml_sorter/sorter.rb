@@ -28,6 +28,20 @@ module I18nYamlSorter
       key_value_parse[5].match(/[^\\](["'])$/)[1] rescue nil
     end
 
+    def append_next_lines_until_closing_quote!(array, starts_with_quote)
+      loop do
+        content_line = @io_input.gets || break
+        content_line.chomp!
+        array.last << content_line.concat("\n")
+        break if content_line.match(/[^\\][#{starts_with_quote}]\s*$/)
+      end
+    end
+
+    def matches_is_special_string?(line)
+      # Is it a | or > string value?
+      line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)([|>])(\s*)$/)
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -45,25 +59,15 @@ module I18nYamlSorter
 
           # Special cases when it should add extra lines to the array element (multi line quoted strings)
 
-          #Is the value surrounded by quotes?
           starts_with_quote = matches_starts_with_quote?(key_value_parse)
           ends_with_quote = matches_ends_with_quote?(key_value_parse)
           if starts_with_quote and !(starts_with_quote == ends_with_quote)
-
-            loop do #Append next lines until we find the closing quote
-              content_line = @io_input.gets || break
-              content_line.chomp!
-              array.last << content_line.concat("\n")
-              break if content_line.match(/[^\\][#{starts_with_quote}]\s*$/)
-            end
-
-          end #  if starts_with_quote
-
+            append_next_lines_until_closing_quote!(array, starts_with_quote)
+          end
           next
-        end # if  key_value_parse
+        end
 
-        # Is it a | or > string alue?
-        is_special_string = maybe_next_line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)([|>])(\s*)$/)
+        is_special_string = matches_is_special_string?(maybe_next_line)
         if is_special_string
           array << maybe_next_line.concat("\n") #yes, it is the beginning of a key block
           indentation = is_special_string[1]
