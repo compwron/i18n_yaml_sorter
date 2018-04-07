@@ -45,4 +45,13 @@ describe I18nYamlSorter do
       expect(expected_out.read).to eq(output)
     end
   end
+
+  it 'test_should_sort_complex_sample_file_with_special_characters' do
+    open(File.dirname(__FILE__) + '/in_W.yml') do |file|
+      sorter = I18nYamlSorter::Sorter.new(file)
+      open(File.dirname(__FILE__) + '/out_W.yml') do |expected_out|
+        expect(expected_out.read).to eq(sorter.sort)
+      end
+    end
+  end
 end
