@@ -3,202 +3,26 @@
 [![Build Status](https://travis-ci.org/compwron/i18n_yaml_sorter.svg?branch=master)](https://travis-ci.org/compwron/i18n_yaml_sorter)
 [![Gem Version](https://badge.fury.io/rb/i18n_yaml_sorter_2.svg)](http://badge.fury.io/rb/i18n_yaml_sorter_2)
 
+## History
 
-A simple YAML Hash deep sorter that will not mess with the way your strings
-and text values were written. Made exclusively to sort the YAML Hash keys
-commonly used in the i18n gem and Rails' apps. It will not sort arrays, YAML
-objects, etc.
+This is a fork of https://github.com/redealumni/i18n_yaml_sorter and the original works just fine. :)
 
-It doesn't parse the YAML and dumps it again, it just sorts the lines, it's
-pure and simple magic! That way, it guarantees you can keep using your nice
-YAML constructs to create large text values, as we usually do in i18n files.
+## Purpose
 
-It includes a simple TextMate bundle and a rake task for Rails, so you can
-keep all those .yml files sorted in no time.
+Large yaml files can be frustrating to navigate. This helps. This is intended to specifically work with the YAML Hash keys commonly used by the i18n gem and rails apps.
 
-## Motivation
+This does not parse YAML, it just sorts the lines. 
 
-As your rails i18n app grows, it becomes very boring to keep all locale files
-in sync. You have to add all keys in the same order, in different languages,
-or you will get yourself into a mess and will lose precious time comparing the
-files in different locales and looking for the appropriate translation keys
-whenever you want to change something or see if a key is missing.
+## Usage
+    
+    gem install i18n_yaml_sorter_2
+    sort_yaml < in.yml > out.yml
+    mv out.yml in.yml
+    
+or
 
-If you try deserializing/serializing the yml files using the YAML parser, to
-get them in the same order, you will figure that your strings in the YAMLs
-will be "standarized" to whatever the YAML generator prefers (eg.: strings in
-double quotes, character escapes, etc). It will also mess up your indentation
-(and use its defaults) and remove your comments. 
-
-i18n_yaml_sorter to the rescue! Add it to TextMate and you will be able to
-sort your yaml file in nanoseconds. Your file will look pristine, like it was
-human edited. 
-
-Tested in ruby-1.8.7-p334 and ruby-1.9.2-p290, should work everywhere since it
-is so simple. Rake task works in Rails 3.1, not sure about older versions
-though (patch updates are welcome, if you find it doesn't). 
-
-## Simple Example
-This: 
-
-    pt-BR:
-      # Note how this is a nice way of inputing
-      # paragraphs of text in YAML. 
-      apples: >
-        Maçãs são boas,
-        só não coma 
-        seus iPods!
-      grapes: Não comemos elas.
-      bananas: |
-        Bananas são "legais":
-          - Elas são <b> doces </b>.
-          isto: não é chave
-
-        Por isto todos gostam de bananas!
-    en-US:
-      # Note that our comments are important:
-      # Don't let your yaml sorter delete them!
-      grapes: We dont' eat them.
-      bananas: |
-        Bananas are "nice":
-          - They are <b> sweet </b>.
-          this: not a key  
-
-        That is why everyone like bananas!
-      apples: >
-        Apples are fine,
-        just don't eat your 
-        iPods!
-
-Becomes:
-
-    en-US:
-      # Note that our comments are important:
-      # Don't let your yaml sorter delete them!
-      apples: >
-        Apples are fine,
-        just don't eat your 
-        iPods!
-      bananas: |
-        Bananas are "nice":
-          - They are <b> sweet </b>.
-          this: not a key  
-
-        That is why everyone like bananas!
-      grapes: We dont' eat them.
-    pt-BR:
-      # Note how this is a nice way of inputing
-      # paragraphs of text in YAML. 
-      apples: >
-        Maçãs são boas,
-        só não coma 
-        seus iPods!
-      bananas: |
-        Bananas são "legais":
-          - Elas são <b> doces </b>.
-          isto: não é chave
-
-        Por isto todos gostam de bananas!
-      grapes: Não comemos elas.
-
-What if you use some method that employ's Ruby's YAML library to help do the
-task for you? You would get an output like that (note it removes your
-comments):
-
-    en-US: 
-      apples: Apples are fine, just don't eat your  iPods!
-      bananas: |
-        Bananas are "nice":
-          - They are <b> sweet </b>.
-          this: not a key  
-
-        That is why everyone like bananas!
-
-      grapes: We dont' eat them.
-    pt-BR: 
-      apples: "Ma\xC3\xA7\xC3\xA3s s\xC3\xA3o boas, s\xC3\xB3 n\xC3\xA3o coma  seus iPods!\n"
-      bananas: "Bananas s\xC3\xA3o \"legais\":\n  - Elas s\xC3\xA3o <b> doces </b>.\n  isto: n\xC3\xA3o \xC3\xA9 chave\n\n\
-        Por isto todos gostam de bananas!\n"
-      grapes: "N\xC3\xA3o comemos elas."
-
-## More complex example
-
-This:
-
-    b_two:
-      a_1: Simple most common text
-      b_two: |
-        This is the best way of
-        inputing large chunks of text
-        in the YAML files.
-
-        Note that this format keeps blank
-        lines in the same indentation.
-      d_four: "We can also 
-        use the boring \"
-        across multiple lines 
-        but have to escape then."
-      e_five: Or you can do it 
-        like that as well, it also works.
-      c_three:
-          a: "Marcelo"
-          d_4: Rafael
-          # Your comments will be untouched
-          # but will be bound to the element
-          # on top of them (d_4 here).
-          "b": Bernardo
-          c_3:
-              unify: Luiz
-              klass: Lucas
-    a_one: > 
-      This is another way 
-      of inputing text. It
-      will squish whitespace
-      when deserialized
-      (like HTML does).
-
-Becomes:
-
-    a_one: > 
-      This is another way 
-      of inputing text. It
-      will squish whitespace
-      when deserialized
-      (like HTML does).
-    b_two:
-      a_1: Simple most common text
-      b_two: |
-        This is the best way of
-        inputing large chunks of text
-        in the YAML files.
-
-        Note that this format keeps blank
-        lines in the same indentation.
-     d_four: "We can also 
-        use the boring \"
-        across multiple lines 
-        but have to escape then."
-      c_three:
-          a: "Marcelo"
-          "b": Bernardo
-          c_3:
-              klass: Lucas
-              unify: Luiz
-          d_4: Rafael
-          # Your comments will be untouched
-          # but will be bound to the element
-          # on top of them (d_4 here).
-      e_five: Or you can do it 
-        like that as well, it also works.
-
-## Installing
-
-Easy, just install the gem:
-
-    $ gem install i18n_yaml_sorter
-
-Then the `sort_yaml` command line tool will be available. If you prefer using
-Ruby (in your rakes, etc), use the simple `I18nYamlSorter::Sort` class.
+    require 'i18n_yaml_sorter'
+    I18nYamlSorter::Sorter.new(File.open('path/to/file.yml'))  
 
 ## Textmate Bundle
 
@@ -212,11 +36,11 @@ file  (or just the part of it that is selected) will be sorted. To edit the
 selected part of the file, make sure it is valid YAML by itself, or your yaml
 file might be corrupted (you can always Undo if you mess up).
 
-## Rails Rake Taks
+## Rails Rake Task
 
 Declare it as a dependency in your app Gemfile, under the development group:
 
-    gem 'i18n_yaml_sorter', :group => :development
+    gem 'i18n_yaml_sorter_2', :group => :development
 
 Run bundle install under your Rails' app:
 
@@ -227,39 +51,19 @@ Now run the rake task under your Rails' app to sort all the i18n files in your
 
     $rake i18n:sort
 
-## Command line Input / Output
-
-`sort_yaml` will operate on STDIN and STDOUT, so sorting an existing yaml file
-should be as easy as:
-
-    $ sort_yaml < in.yml > out.yml
-
-TODO: Add command line arguments parsing and options, so you can, for
-instance, sort a whole dir of yaml files.
-
 ## Development
 
-    $rake spec # run tests
-    $rake release # build installable/publishable gem
-
-## Future improvements (Forks Welcome!)
-
-*   Make `sort_yaml` smart, take directories, etc
-*   Refactoring: internal code is still a bit ugly, but works
-
-
-## Note on Patches/Pull Requests
-
-*   Fork the project.
-*   Make your feature addition or bug fix.
-*   Add tests for it. This is important so I don't break it in a future
-    version unintentionally.
-*   Commit, do not mess with rakefile, version, or history. (if you want to
-    have your own version, that is fine but bump version in a commit by itself
-    I can ignore when I pull)
-*   Send me a pull request. Bonus points for topic branches.
-
+    rake spec # run tests
+    rake release # build installable/publishable gem
 
 ## Copyright
 
 Copyright (c) 2010-2011 Bernardo de Pádua. MIT License (See LICENCE).
+
+## Contributing
+
+1. Fork it ( https://github.com/[my-github-username]/aws_agcod/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
