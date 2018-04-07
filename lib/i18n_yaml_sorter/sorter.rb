@@ -48,6 +48,14 @@ module I18nYamlSorter
       line.match(/^\s*/)[0] rescue ''
     end
 
+    def merge_with_previous_line!(array, maybe_next_line)
+      if array.last
+        array.last << maybe_next_line.concat(LINE_BREAK)
+      else
+        array << maybe_next_line.concat(LINE_BREAK)
+      end
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -102,11 +110,7 @@ module I18nYamlSorter
 
         # If we got here and nothing was done, this line
         # should probably be merged with the previous one.
-        if array.last
-          array.last << maybe_next_line.concat(LINE_BREAK)
-        else
-          array << maybe_next_line.concat(LINE_BREAK)
-        end
+        merge_with_previous_line!(array, maybe_next_line)
       end
 
       array
