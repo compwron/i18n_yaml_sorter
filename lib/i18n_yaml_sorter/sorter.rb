@@ -12,6 +12,10 @@ module I18nYamlSorter
 
     private
 
+    def is_blank?(line)
+      line.match(/^\s*$/)
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -21,13 +25,12 @@ module I18nYamlSorter
         @read_line_again = nil
         maybe_next_line.chomp!
 
-        #Is it blank? Discard!
-        next if maybe_next_line.match(/^\s*$/)
+        next if is_blank?(maybe_next_line)
 
         #Does it look like a key: value line?
         key_value_parse = maybe_next_line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)(\S.*\S)(\s*)$/)
-        if  key_value_parse
-          array << maybe_next_line.concat("\n")  #yes, it is the beginning of a key:value block
+        if key_value_parse
+          array << maybe_next_line.concat("\n") #yes, it is the beginning of a key:value block
 
           #Special cases when it should add extra lines to the array element (multi line quoted strings)
 
@@ -51,7 +54,7 @@ module I18nYamlSorter
         # Is it a | or > string alue?
         is_special_string = maybe_next_line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)([|>])(\s*)$/)
         if is_special_string
-          array << maybe_next_line.concat("\n")  #yes, it is the beginning of a key block
+          array << maybe_next_line.concat("\n") #yes, it is the beginning of a key block
           indentation = is_special_string[1]
           #Append the next lines until we find one that is not indented
           loop do
@@ -83,7 +86,7 @@ module I18nYamlSorter
         else
           array << maybe_next_line.concat("\n")
         end
-      end  #loop
+      end #loop
 
       array
     end
@@ -119,7 +122,7 @@ module I18nYamlSorter
         end
       end
 
-      return out_array.sort.map(&:last).join
+      out_array.sort.map(&:last).join
     end
   end
 end
