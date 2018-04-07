@@ -1,5 +1,9 @@
 # i18n_yaml_sorter
 
+[![Build Status](https://travis-ci.org/compwron/i18n_yaml_sorter.svg?branch=master)](https://travis-ci.org/compwron/i18n_yaml_sorter)
+[![Gem Version](https://badge.fury.io/rb/i18n_yaml_sorter_2.svg)](http://badge.fury.io/rb/i18n_yaml_sorter_2)
+
+
 A simple YAML Hash deep sorter that will not mess with the way your strings
 and text values were written. Made exclusively to sort the YAML Hash keys
 commonly used in the i18n gem and Rails' apps. It will not sort arrays, YAML
