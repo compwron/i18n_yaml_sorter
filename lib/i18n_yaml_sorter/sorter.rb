@@ -16,6 +16,10 @@ module I18nYamlSorter
       line.match(/^\s*$/)
     end
 
+    def matches_key_value_line?(line)
+      line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)(\S.*\S)(\s*)$/)
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -28,7 +32,7 @@ module I18nYamlSorter
         next if is_blank?(maybe_next_line)
 
         #Does it look like a key: value line?
-        key_value_parse = maybe_next_line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)(\S.*\S)(\s*)$/)
+        key_value_parse = matches_key_value_line?(maybe_next_line)
         if key_value_parse
           array << maybe_next_line.concat("\n") #yes, it is the beginning of a key:value block
 
