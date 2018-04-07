@@ -1,15 +1,5 @@
 # encoding: UTF-8
-
-m_13: >
-  Não deve dar problema aqui!
-  Não deve dar problema aqui!
-  Não deve dar problema aqui!
-  Pois às vezes dá.
-
-o_15: |
-  Não deve dar problema aqui!
-  Pois às vezes dá.
-
+a_one: José   # Comentado
 b_two:
   a_1: Joãozinho
   b_two: |
@@ -17,45 +7,49 @@ b_two:
     por exemplo: João,
     que: gosta de nos dar milhões
     em dinheiro todos os dias.
-
     Linhas em Branco com tabulação
     nos strings devem ser preservadas.
-
+  c_three:
+      a: "Marcelo"
+      "b": Bernardo
+      c_3:
+          klass: Lucas
+          unify: Luiz
+      d_4: Rafael
+      # Comentário de muitas
+      # linhas (goes with d_4)
   d_four: "Somos chatos
     gostamos de várias linhas\"
     e ainda usamos escaping
     para fuder"
   e_five: Prefirimos strings sem
     nenhum tipo de especificação.
-  c_three:
-      a: "Marcelo"
-      d_4: Rafael
-      # Comentário de muitas
-      # linhas (goes with d_4)
-      "b": Bernardo
-      c_3:
-          unify: Luiz
-          klass: Lucas
   f_six: Dalton
-a_one: José   # Comentado
 c_three: Gustavo
 # Comentário (goes with c_three)
-f_six: Thiago
+d_four: Oliveira
 e_five:
-  b_two: Catarina
   a_one: Rodrigo
   # Comentário (goes with a_one)
+  b_two: Catarina
+f_six: Thiago
 "g-seven": Marcelo
-d_four: Oliveira
-k_eleven: Ronaldo
-"l_other123123": Emilio
-
+h_eight: "Jonivildo"
 i_nine: Prestes
-
 j_ten: >
   Pior quando resolvemos escrever
   assim, impossível aturar!
+k_eleven: Ronaldo
+"l_other123123": Emilio
+m_13: >
+  Não deve dar problema aqui!
+  Não deve dar problema aqui!
+  Não deve dar problema aqui!
+  Pois às vezes dá.
 n_14: >
+  Não deve dar problema aqui!
+  Pois às vezes dá.
+o_15: |
   Não deve dar problema aqui!
   Pois às vezes dá.
 o_15: |
@@ -63,4 +57,3 @@ o_15: |
   Pois às vezes dá.
 p_16: Não deve dar problema aqui!
   Pois às vezes dá.
-h_eight: "Jonivildo"

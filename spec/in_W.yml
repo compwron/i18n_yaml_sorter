@@ -17,10 +17,8 @@ b_(two)²:
     por exemplo: João,
     que: gosta de nos dar milhões
     em dinheiro todos os dias.
-
     Linhas em Branco com tabulação
     nos strings devem ser preservadas.
-
   d_four: "Somos chatos
     gostamos de várias linhas\"
     e ainda usamos escaping
