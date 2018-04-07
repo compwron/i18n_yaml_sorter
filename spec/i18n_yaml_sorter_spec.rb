@@ -1,35 +1,30 @@
 require 'spec_helper'
 
 describe I18nYamlSorter do
-  it 'test_should_sort_complex_sample_file' do
-    open(File.dirname(__FILE__) + '/in.yml') do |file|
+
+  def compare_sorted(in_file, out_file)
+    open(File.dirname(__FILE__) + '/' + in_file) do |file|
       sorter = I18nYamlSorter::Sorter.new(file)
-      open(File.dirname(__FILE__) + '/out.yml') do |expected_out|
+      open(File.dirname(__FILE__) + '/' + out_file) do |expected_out|
         expect(expected_out.read).to eq(sorter.sort)
       end
     end
   end
 
-  it 'test_should_rails_i18n_default_file' do
-    open(File.dirname(__FILE__) + '/in_rails.yml') do |file|
-      sorter = I18nYamlSorter::Sorter.new(file)
-      open(File.dirname(__FILE__) + '/out_rails.yml') do |expected_out|
-        expect(expected_out.read).to eq(sorter.sort)
-      end
-    end
+  it 'sorts simple file and removes empty lines' do
+    compare_sorted('in_simple.yml', 'out_simple.yml')
   end
 
-  it 'test_should_sort_simple_text_file' do
-    open(File.dirname(__FILE__) + '/in_simple.yml') do |file|
-      sorter = I18nYamlSorter::Sorter.new(file)
-      open(File.dirname(__FILE__) + '/out_simple.yml') do |expected_out|
-        expect(expected_out.read).to eq(sorter.sort)
-      end
-    end
+  it 'sorts multi-indented keys with quotes and symbols and accents and comments' do
+    compare_sorted('in.yml', 'out.yml')
   end
 
-  it 'test_should_not_alter_the_serialized_yaml' do
-    #ordering should'n t change a thing, since hashes don't have order in Ruby
+  it 'sorts rails i18n style default file' do
+    compare_sorted('in_rails.yml', 'out_rails.yml')
+  end
+
+  it 'does not change the input file' do
+    # ordering shouldn't change anything, since hashes don't have order in Ruby
     open(File.dirname(__FILE__) + '/in.yml') do |file|
       sorter = I18nYamlSorter::Sorter.new(file)
       present = YAML::load(file.read)
@@ -39,19 +34,14 @@ describe I18nYamlSorter do
     end
   end
 
-  it 'test_command_line_should_work_in_stdin' do
+  it 'runs commandline command' do
     output = `#{File.dirname(__FILE__)}/../bin/sort_yaml < #{File.dirname(__FILE__)}/in.yml`
     open(File.dirname(__FILE__) + '/out.yml') do |expected_out|
       expect(expected_out.read).to eq(output)
     end
   end
 
-  it 'test_should_sort_complex_sample_file_with_special_characters' do
-    open(File.dirname(__FILE__) + '/in_W.yml') do |file|
-      sorter = I18nYamlSorter::Sorter.new(file)
-      open(File.dirname(__FILE__) + '/out_W.yml') do |expected_out|
-        expect(expected_out.read).to eq(sorter.sort)
-      end
-    end
+  it 'sorts keys containing parenthesis' do
+    compare_sorted('in_W.yml', 'out_W.yml')
   end
 end
