@@ -20,6 +20,14 @@ module I18nYamlSorter
       line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)(\S.*\S)(\s*)$/)
     end
 
+    def matches_starts_with_quote?(key_value_parse)
+      key_value_parse[5].match(/^["']/)[0] rescue nil
+    end
+
+    def matches_ends_with_quote?(key_value_parse)
+      key_value_parse[5].match(/[^\\](["'])$/)[1] rescue nil
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -31,16 +39,15 @@ module I18nYamlSorter
 
         next if is_blank?(maybe_next_line)
 
-        #Does it look like a key: value line?
         key_value_parse = matches_key_value_line?(maybe_next_line)
         if key_value_parse
-          array << maybe_next_line.concat("\n") #yes, it is the beginning of a key:value block
+          array << maybe_next_line.concat("\n") # yes, it is the beginning of a key:value block
 
-          #Special cases when it should add extra lines to the array element (multi line quoted strings)
+          # Special cases when it should add extra lines to the array element (multi line quoted strings)
 
           #Is the value surrounded by quotes?
-          starts_with_quote = key_value_parse[5].match(/^["']/)[0] rescue nil
-          ends_with_quote = key_value_parse[5].match(/[^\\](["'])$/)[1] rescue nil
+          starts_with_quote = matches_starts_with_quote?(key_value_parse)
+          ends_with_quote = matches_ends_with_quote?(key_value_parse)
           if starts_with_quote and !(starts_with_quote == ends_with_quote)
 
             loop do #Append next lines until we find the closing quote
