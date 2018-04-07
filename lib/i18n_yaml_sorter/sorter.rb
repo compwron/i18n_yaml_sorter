@@ -42,6 +42,10 @@ module I18nYamlSorter
       line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)([|>])(\s*)$/)
     end
 
+    def indentation_of(line)
+      line.match(/^\s*/)[0] rescue ''
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -75,7 +79,7 @@ module I18nYamlSorter
           loop do
             content_line = @io_input.gets || break
             processed_line = content_line.chomp
-            this_indentation = processed_line.match(/^\s*/)[0] rescue ""
+            this_indentation = indentation_of(processed_line)
             if indentation.size < this_indentation.size
               array.last << processed_line.concat("\n")
             else
@@ -87,21 +91,21 @@ module I18nYamlSorter
           next
         end #if is_special_string
 
-        # Is it the begining of a multi level hash?
+        # Is it the beginning of a multi level hash?
         is_start_of_hash = maybe_next_line.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)(\s*)$/)
         if is_start_of_hash
           array << maybe_next_line.concat("\n")
           next
         end
 
-        #If we got here and nothing was done, this line
+        # If we got here and nothing was done, this line
         # should probably be merged with the previous one.
         if array.last
           array.last << maybe_next_line.concat("\n")
         else
           array << maybe_next_line.concat("\n")
         end
-      end #loop
+      end
 
       array
     end
