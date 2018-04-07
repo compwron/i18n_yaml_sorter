@@ -37,7 +37,7 @@ module I18nYamlSorter
       end
     end
 
-    def matches_is_special_string?(line)
+    def matches_is_key_block?(line)
       # Is it a | or > string value?
       line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)([|>])(\s*)$/)
     end
@@ -67,11 +67,11 @@ module I18nYamlSorter
           next
         end
 
-        is_special_string = matches_is_special_string?(maybe_next_line)
-        if is_special_string
-          array << maybe_next_line.concat("\n") #yes, it is the beginning of a key block
-          indentation = is_special_string[1]
-          #Append the next lines until we find one that is not indented
+        matches_is_key_block = matches_is_key_block?(maybe_next_line)
+        if matches_is_key_block
+          array << maybe_next_line.concat("\n") # yes, it is the beginning of a key block
+          indentation = matches_is_key_block[1]
+          # Append the next lines until we find one that is not indented
           loop do
             content_line = @io_input.gets || break
             processed_line = content_line.chomp
