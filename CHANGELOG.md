@@ -1,6 +1,9 @@
 i18n_yaml_sorter
 ----------------
 
+0.3.3
+- I'm still new at this, pretty sure that this deletes empty lines now but I'm not sure why.
+
 0.3.2
 - gemspec
 

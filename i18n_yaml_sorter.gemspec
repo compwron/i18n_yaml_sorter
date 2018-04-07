@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/compwron/i18n_yaml_sorter'
   s.license = 'MIT'
   s.executables = ['sort_yaml']
-  s.files = Dir['{lib,spec}/**/*'].select { |f| File.file?(f) } + %w(LICENSE Rakefile README.rdoc)
+  s.files = Dir['{lib,spec}/**/*'].select { |f| File.file?(f) } + %w(LICENSE Rakefile README.md)
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
