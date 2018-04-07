@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    i18n_yaml_sorter_2 (0.3.2)
+    i18n_yaml_sorter_2 (0.3.3)
 
 GEM
   remote: https://rubygems.org/
