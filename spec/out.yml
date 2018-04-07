@@ -7,10 +7,8 @@ b_two:
     por exemplo: João,
     que: gosta de nos dar milhões
     em dinheiro todos os dias.
-
     Linhas em Branco com tabulação
     nos strings devem ser preservadas.
-
   c_three:
       a: "Marcelo"
       "b": Bernardo

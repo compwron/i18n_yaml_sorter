@@ -9,7 +9,6 @@ en-US:
     Bananas are "nice":
       - They are <b> sweet </b>.
       this: not a key
-
     That is why everyone like bananas!
   grapes: We dont' eat them.
 pt-BR:
@@ -23,6 +22,5 @@ pt-BR:
     Bananas são "legais":
       - Elas são <b> doces </b>.
       isto: não é chave
-
     Por isto todos gostam de bananas!
   grapes: Não comemos elas.
