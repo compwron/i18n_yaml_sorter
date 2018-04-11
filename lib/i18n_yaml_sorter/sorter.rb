@@ -56,6 +56,10 @@ module I18nYamlSorter
       end
     end
 
+    def beginning_of_multi_level_hash?(line)
+      line.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)(\s*)$/)
+    end
+
     def break_blocks_into_array
       array = []
 
@@ -99,11 +103,9 @@ module I18nYamlSorter
           end
 
           next
-        end #if is_special_string
+        end
 
-        # Is it the beginning of a multi level hash?
-        is_start_of_hash = maybe_next_line.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)(\s*)$/)
-        if is_start_of_hash
+        if beginning_of_multi_level_hash?(maybe_next_line)
           array << maybe_next_line.concat(LINE_BREAK)
           next
         end
@@ -125,7 +127,7 @@ module I18nYamlSorter
       out_array = []
       current_match = current_block.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)/)
       current_level = current_match[1] rescue ''
-      current_key = current_match[2].downcase.tr(%q{"'}, "") rescue ''
+      current_key = current_match[2].downcase.tr(%q{"'}, '') rescue ''
       out_array << [current_key, current_block]
 
       loop do
