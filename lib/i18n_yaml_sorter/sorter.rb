@@ -118,6 +118,10 @@ module I18nYamlSorter
       array
     end
 
+    def get_current_match(current_block)
+      current_block.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)/)
+    end
+
     def sorted_yaml_from_blocks_array(current_block = nil)
       unless current_block
         current_block = @array[@current_array_index]
@@ -125,7 +129,7 @@ module I18nYamlSorter
       end
 
       out_array = []
-      current_match = current_block.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)/)
+      current_match = get_current_match(current_block)
       current_level = current_match[1] rescue ''
       current_key = current_match[2].downcase.tr(%q{"'}, '') rescue ''
       out_array << [current_key, current_block]
@@ -134,7 +138,7 @@ module I18nYamlSorter
         next_block = @array[@current_array_index] || break
         @current_array_index += 1
 
-        current_match = next_block.match(/^(\s*)(["']?[\w\W\-]+["']?)(:)/) || next
+        current_match = get_current_match(next_block) || next
         current_key = current_match[2].downcase.tr(%q{"'}, "")
         next_level = current_match[1]
 
