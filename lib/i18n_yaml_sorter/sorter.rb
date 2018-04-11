@@ -7,7 +7,7 @@ module I18nYamlSorter
     def sort
       @array = break_blocks_into_array
       @current_array_index = 0
-      sorted_yaml_from_blocks_array
+      @result ||= sorted_yaml_from_blocks_array
     end
 
     private
@@ -117,7 +117,6 @@ module I18nYamlSorter
     end
 
     def sorted_yaml_from_blocks_array(current_block = nil)
-
       unless current_block
         current_block = @array[@current_array_index]
         @current_array_index += 1
